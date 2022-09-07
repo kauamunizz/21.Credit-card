@@ -4,10 +4,75 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Credit Card</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
+
+    <div class="main">
+      <div class="form-image"></div>
+
+      <div id="cartao" class="card">
+
+        <div class="front">
+
+          <img src="./public/imgs/chip.png" alt="chip card">
+  
+          <span class="numCartao">#### #### #### ####</span>
+  
+          <div class="inferior">
+            <label> Name
+              <span class="nameCartao">FULL NAME</span>
+            </label>
+  
+            <label class="mmyy"> Expires
+  
+              <div class="separate">
+                <span class="expMes"> MM</span>
+                <span> / </span>
+                <span class="expAno"> YY</span>
+              </div>
+            </label>
+          </div>
+
+        </div>
+
+        <div class="back">
+          <div class="line-back"></div>
+          
+          <label> CVV
+            <span class="cvvCartao">000</span>
+          </label>
+        </div>
+
+      </div>
+
+      <form name="formulario">
+        <label>cardholder name
+          <input name="cardHolder" maxlength="30" type="text" placeholder="e.g. Jane Appleseed" required>
+        </label>
+
+        <label>card number
+          <input name="cardNumber" minlength="16" maxlength="16" type="number" placeholder="e.g. 1234 5678 9123 0000" required>
+        </label>
+
+        <div class="fift">
+          <label class="exp">exp. date (mm/yy)
+  
+            <div class="input-exp">
+              <input name="MM" type="number" min="01" max="12" placeholder="MM" required>
+              <input name="YY" type="number" min="2022" step="1" placeholder="YY" required>
+            </div>
+  
+          </label>
+  
+          <label class="cvv">cvv
+            <input name="cvv" type="number" minlength="3" placeholder="e.g. 123" required>
+          </label>
+        </div>
+        <button>Confirm</button>
+      </form>
+    </div>
+
+    <script type="module" src="/src/scripts/index.js"></script>
   </body>
 </html>

@@ -1,0 +1,191 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // background-color: #0c0ce94d;
+  .main {
+    width: 80%;
+    height: 80vh;
+    display: flex;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .212);
+    position: relative;
+
+    .form-image {
+      width: 30%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(134deg, rgba(4 2 5 / 84%), rgba(79 14 128 / 84%) );
+      padding: 1rem;
+    }
+    .rotate {
+      position: relative;
+      transform: rotateY(180deg);
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+
+      .front {
+        backface-visibility: hidden;
+      }
+      .back {
+        display: contents;
+        transform: rotateY(180deg);
+
+        .line-back {
+          position: absolute;
+          top: 10px;
+          left: 0;
+          background: rgba(0, 0, 19, 0.8);
+          width: 100%;
+          height: 50px;
+        }
+
+        label {
+          position: absolute;
+          display: flex;
+          transform: rotateY(180deg);
+          flex-direction: column;
+          left: 234px;
+          top: 137px;
+          width: 67px;
+          font-size: 11px;
+          color: #ccc;
+          span {
+            color: #fff;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+    .card {
+      position: absolute;
+      color: #fff;
+      border-radius: 10px;
+      padding: 25px 20px;
+      width: 320px;
+      height: 190px;
+      top: 150px;
+      left: 150px;
+      background: linear-gradient(322deg, rgba(194, 131, 226), rgba(114, 210, 235) );
+
+      .front {
+
+        img {
+          width: 40px;
+        }
+        .numCartao {
+          display: flex;
+          justify-content: center;
+          line-height: 1;
+          color: #fff;
+          font-size: 27px;
+          margin: 25px 0;
+          height: 20px;
+        }
+        .inferior {
+          display: flex;
+          justify-content: space-between;
+  
+          .mmyy {
+            display: flex;
+            span {
+              flex-direction: row;
+  
+            }
+          }
+          label {
+            display: flex;
+            flex-direction: column;
+            font-size: 11px;
+            color: #ccc;
+  
+            span {
+              color: #fff;
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+
+    form {
+      width: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #fff;
+      // padding: 3rem;
+
+      label {
+        width: 50%;
+        font-size: 13px;
+        color: rgb(51 13 81 / 84%);
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        input {
+          border-radius: 5px;
+          padding: 7px 0 7px 10px;
+          margin-top: 10px;
+          border: 1px solid #ccc;
+
+          &::placeholder {
+            opacity: .6;
+          }
+          
+          &:focus {
+            outline: 2px solid rgb(51 13 81);
+          }
+        }
+      }
+      .fift {
+        width: 70%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+
+        .exp {
+          width: 35%;
+          .input-exp {
+            // display: flex;
+            input {
+              width: 40%;
+              
+              &:nth-child(1) {
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+        .cvv {
+          width: 35%;
+          input {
+            width: 40%;
+          }
+        }
+      }
+      button {
+        background: linear-gradient(161deg, rgb(4 2 5 / 84%), rgb(51 13 81 / 84%));
+        color: #fff;
+        border: none;
+        padding: 10px 0;
+        width: 50%;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+      
+    
