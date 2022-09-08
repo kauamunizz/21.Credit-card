@@ -233,6 +233,9 @@ body{
       .form-image {
         display: none;
       }
+      .confirmed {
+        width: 100%;
+      }
       form {
         width: 100%;
         margin-top: 80px;
@@ -263,7 +266,7 @@ body{
         // top: 15%;
         width: 300px;
         height: 170px;
-        top: 16px;
+        top: 18px;
         left: 18px;
         padding: 20px 13px;
       }
