@@ -79,8 +79,11 @@ body{
       padding: 25px 20px;
       width: 320px;
       height: 190px;
-      top: 150px;
-      left: 150px;
+      left: 24%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      // top: 150px;
+      // left: 150px;
       background: linear-gradient(322deg, rgba(194, 131, 226), rgba(114, 210, 235) );
       
       .back {
@@ -249,6 +252,8 @@ body{
         }
       }
       .card {
+        left: 50%;
+        top: 15%;
         width: 300px;
         height: 170px;
         top: 16px;
