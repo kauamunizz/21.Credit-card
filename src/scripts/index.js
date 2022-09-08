@@ -38,7 +38,7 @@ const index = (() => {
     function updateCard(card) {
         const { id } = card.dataset;
         const inputs = card.querySelectorAll('input');
-        const cardUpdate = state.list.find(atual => atual.id === Number(id));
+        const cardUpdate = state.list.find(atual => atual.id === id);
 
         cardUpdate.nome = inputs[0].value;
         cardUpdate.numero = inputs[1].value;
@@ -169,7 +169,6 @@ const index = (() => {
             if (validateCard(card)) {
 
                 if (state.list.length){
-                    
                     updateCard(card);
                     console.log(state.list);
                 }
