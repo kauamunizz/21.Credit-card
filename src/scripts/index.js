@@ -8,66 +8,37 @@ const index = (() => {
         list: []
     }
 
-    function createCard(card) {
-        const newCard = card || {
-            id: Date.now(),
-            nome: '',
-            numero: '',
-            mes: '',
-            ano: '',
-            cvv: ''
-        }
+    // function createCard(card) {
+    //     const newCard = card || {
+    //         id: Date.now(),
+    //         nome: '',
+    //         numero: '',
+    //         mes: '',
+    //         ano: '',
+    //         cvv: ''
+    //     }
+       
+    //     console.log(state.list)
+    // }
 
-        const container = document.querySelector('.main');
-        
-        container.insertAdjacentHTML('beforeend', /* html */ `
-            <form data-id="${newCard.id}" id="form" name="formulario">
-                <label>cardholder name
-                    <input value="${newCard.nome}" name="cardHolder" maxlength="30" type="text" placeholder="e.g. Jane Appleseed" required>
-                </label>
-        
-                <label>card number
-                    <input value="${newCard.numero}" name="cardNumber" minlength="16" maxlength="16" type="number" placeholder="e.g. 1234 5678 9123 0000" required>
-                </label>
-        
-                <div class="fift">
-                    <label class="exp">exp. date (mm/yy)
-            
-                        <div class="input-exp">
-                            <input value="${newCard.mes}" name="MM" type="number" min="01" max="12" placeholder="MM" required>
-                            <input value="${newCard.ano}" name="YY" type="number" min="2022" step="1" placeholder="YY" required>
-                        </div>
-            
-                    </label>
-            
-                    <label class="cvv">cvv
-                        <input value="${newCard.cvv}" name="cvv" type="number" minlength="3" placeholder="e.g. 123" required>
-                    </label>
-                </div>
-                <button>Confirm</button>
-            </form>
-        `);
-        console.log(state.list)
+    function saveLocalStorage() {
+        const cardStr = JSON.stringify(state.list);
+
+        localStorage.setItem('@saveCard:list', cardStr);
     }
 
-    // function saveLocalStorage() {
-    //     const cardStr = JSON.stringify(state.list);
+    function loadLocalStorage() {
+        const cardStr = localStorage.getItem('@saveCard:list');
+        const loadedCard = cardStr ? JSON.parse(cardStr) : [];
+        state.list = loadedCard;
 
-    //     localStorage.setItem('@saveCard:list', cardStr);
-    // }
-
-    // function loadLocalStorage() {
-    //     const cardStr = localStorage.getItem('@saveCard:list');
-    //     const loadedCard = cardStr ? JSON.parse(cardStr) : [];
-    //     state.list = loadedCard;
-
-    //     renderCard();
-    // }
+        renderCard();
+    }
 
     function updateCard(card) {
         const { id } = card.dataset;
         const inputs = card.querySelectorAll('input');
-        const cardUpdate = state.list.find(atual => atual.id === id);
+        const cardUpdate = state.list.find(atual => atual.id === Number(id));
 
         cardUpdate.nome = inputs[0].value;
         cardUpdate.numero = inputs[1].value;
@@ -115,21 +86,30 @@ const index = (() => {
     }
 
     function renderCard() {
-        // saveLocalStorage();
+        saveLocalStorage();
         const { list } = state;
         const container = document.querySelector('#form');
-        container.innerHTML = '';     
+        const confirmed = document.querySelector('.confirmed');
+        // container.innerHTML = '';     
+        
+
         
         if (list.length) {
+            container.style.display = "none";
+            confirmed.style.display = "flex";
             
-            container.insertAdjacentHTML('beforeend', /* html */ `
-                <div class="confirmed">
-                    <div class="complete">
-                        <img src="./public/imgs/icons-done.png" alt="complete">
-                    </div>
-                    <h4>Confirmed</h4>
-                </div>
-            `);
+            setTimeout(() => {
+                container.style.display = "flex";
+                confirmed.style.display = "none";
+            }, 4000);
+            list.forEach(({nome, numero, mes, ano, cvv}) => {
+                const inputs = container.querySelectorAll('input');
+                inputs[0].value = nome;
+                inputs[1].value = numero;
+                inputs[2].value = mes;
+                inputs[3].value = ano;
+                inputs[4].value = cvv;
+            })
         }
     }
 
@@ -153,6 +133,7 @@ const index = (() => {
         }
         console.log('save',state.list);
         state.list.push(cardSave);
+        renderCard()
     }
 
     function events() {
@@ -187,11 +168,13 @@ const index = (() => {
             
             if (validateCard(card)) {
 
-                saveCard(card);
                 if (state.list.length){
-    
+                    
                     updateCard(card);
                     console.log(state.list);
+                }
+                else {
+                    saveCard(card);
                 }
             }
 
@@ -200,8 +183,8 @@ const index = (() => {
 
 
     function init() {
-        createCard();
-        // loadLocalStorage();
+        // createCard();
+        loadLocalStorage();
         events();
     }
 

@@ -197,6 +197,11 @@ body{
       }
     }
     .confirmed {
+      display: none;
+      width: 70%;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       .complete {
         display: flex;
         justify-content: center;
