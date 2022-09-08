@@ -65,17 +65,16 @@ const index = (() => {
     // }
 
     function updateCard(card) {
-        debugger;
         const { id } = card.dataset;
         const inputs = card.querySelectorAll('input');
-        const cardUpdate = state.list.find(atual => atual.id === Number(id));
+        const cardUpdate = state.list.find(atual => atual.id === id);
 
-        // cardUpdate.nome = inputs[0].value;
-        // cardUpdate.numero = inputs[1].value;
-        // cardUpdate.mes = inputs[2].value;
-        // cardUpdate.ano = inputs[3].value;
-        // cardUpdate.cvv = inputs[4].value;
-        console.log(cardUpdate)
+        cardUpdate.nome = inputs[0].value;
+        cardUpdate.numero = inputs[1].value;
+        cardUpdate.mes = inputs[2].value;
+        cardUpdate.ano = inputs[3].value;
+        cardUpdate.cvv = inputs[4].value;
+
         renderCard();
         console.log(state.list);
     }
@@ -91,7 +90,7 @@ const index = (() => {
         const ano = inputs[3].value;
         const cvv = inputs[4].value;
 
-        if (nome === '' || nome === Number) {
+        if (nome === '' || nome == Number) {
             error = false;
             alert('O campo deverá ser preenchido com Nome Completo.');
         }
@@ -121,23 +120,17 @@ const index = (() => {
         const container = document.querySelector('#form');
         container.innerHTML = '';     
         
-        list.forEach(({nome, numero, mes, ano, cvv}) => {
-            container.insertAdjacentHTML('beforeend', createCard(nome, numero, mes, ano, cvv))
-        })
-        // if (list.length) {
-        //     setTimeout(() => {
-        //         container.insertAdjacentHTML('beforeend', /* html */ `
-        //             <div class="confirmed">
-        //                 <div class="complete">
-        //                     <img src="./public/imgs/icons-done.png" alt="complete">
-        //                 </div>
-        //                 <h4>Confirmed</h4>
-        //             </div>
-        //         `);
-        //     }, 1000);
-        // }
-        console.log(state.list)
-
+        if (list.length) {
+            
+            container.insertAdjacentHTML('beforeend', /* html */ `
+                <div class="confirmed">
+                    <div class="complete">
+                        <img src="./public/imgs/icons-done.png" alt="complete">
+                    </div>
+                    <h4>Confirmed</h4>
+                </div>
+            `);
+        }
     }
 
     function saveCard(card) {
@@ -160,7 +153,6 @@ const index = (() => {
         }
         console.log('save',state.list);
         state.list.push(cardSave);
-        // renderCard();
     }
 
     function events() {
@@ -179,27 +171,28 @@ const index = (() => {
             const cartao = document.querySelector('#cartao');
 
             if (click.closest('.cvv')){
-                cartao.classList.toggle('rotate');
+                cartao.classList.add('rotate');
+                cartao.classList.remove('padrao');
             }
             else {
                 cartao.classList.remove('rotate');
-                cartao.classList.toggle('padrao');
+                cartao.classList.add('padrao');
             }
         });
 
         document.forms.formulario.addEventListener('submit', event => {
             event.preventDefault();
             const click = event.target;
-            const card =  click.closest('form');
-
+            const card =  click.closest('#form');
+            
             if (validateCard(card)) {
 
+                saveCard(card);
                 if (state.list.length){
+    
                     updateCard(card);
                     console.log(state.list);
                 }
-                
-                saveCard(card);
             }
 
         });
