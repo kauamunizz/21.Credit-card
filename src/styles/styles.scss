@@ -10,6 +10,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Inter', sans-serif;
   // background-color: #0c0ce94d;
   .main {
     width: 80%;
@@ -26,6 +27,11 @@ body{
       background: linear-gradient(134deg, rgba(4 2 5 / 84%), rgba(79 14 128 / 84%) );
       padding: 1rem;
     }
+    .padrao {
+      // transform: rotateY(0deg);
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
     .rotate {
       position: relative;
       transform: rotateY(180deg);
@@ -36,6 +42,7 @@ body{
         backface-visibility: hidden;
       }
       .back {
+        visibility: visible !important;
         display: contents;
         transform: rotateY(180deg);
 
@@ -75,7 +82,10 @@ body{
       top: 150px;
       left: 150px;
       background: linear-gradient(322deg, rgba(194, 131, 226), rgba(114, 210, 235) );
-
+      
+      .back {
+        visibility: hidden;
+      }
       .front {
 
         img {
@@ -86,7 +96,7 @@ body{
           justify-content: center;
           line-height: 1;
           color: #fff;
-          font-size: 27px;
+          font-size: 25px;
           margin: 25px 0;
           height: 20px;
         }
@@ -98,18 +108,17 @@ body{
             display: flex;
             span {
               flex-direction: row;
-  
             }
           }
           label {
             display: flex;
             flex-direction: column;
-            font-size: 11px;
+            font-size: 10px;
             color: #ccc;
   
             span {
               color: #fff;
-              font-size: 15px;
+              font-size: 13px;
             }
           }
         }
@@ -182,6 +191,21 @@ body{
         width: 50%;
         border-radius: 5px;
         cursor: pointer;
+      }
+    }
+    .confirmed {
+      .complete {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: rgb(51 13 81 / 84%);
+      }
+      h3 {
+        margin-top: 10px;
+        text-align: center;
       }
     }
   }
