@@ -101,7 +101,7 @@ const index = (() => {
             setTimeout(() => {
                 container.style.display = "flex";
                 confirmed.style.display = "none";
-            }, 4000);
+            }, 2000);
             list.forEach(({nome, numero, mes, ano, cvv}) => {
                 const inputs = container.querySelectorAll('input');
                 inputs[0].value = nome;
@@ -182,7 +182,6 @@ const index = (() => {
 
 
     function init() {
-        // createCard();
         loadLocalStorage();
         events();
     }
