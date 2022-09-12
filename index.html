@@ -57,30 +57,30 @@
       </div>
           
       <form data-id="1" id="form" name="formulario">
-        <label>cardholder name
-              <input name="cardHolder" maxlength="30" type="text" placeholder="e.g. Jane Appleseed" required>
-              <div><span>error</span></div>
+        <label class="error">cardholder name
+          <input name="cardHolder" maxlength="30" type="text" placeholder="e.g. Jane Appleseed" required>
+          <!-- <div>error</div> -->
+        </label>
+  
+        <label>card number
+          <input name="cardNumber" minlength="16" maxlength="16" type="number" placeholder="e.g. 1234 5678 9123 0000" required>
+        </label>
+
+        <div class="fift">
+          <label class="exp">exp. date (mm/yy)
+  
+            <div class="input-exp">
+              <input name="MM" type="number" min="01" max="12" placeholder="MM" required>
+              <input name="YY" type="number" min="2022" step="1" placeholder="YY" required>
+            </div>
+  
           </label>
   
-          <label>card number
-              <input name="cardNumber" minlength="16" maxlength="16" type="number" placeholder="e.g. 1234 5678 9123 0000" required>
+          <label class="cvv">cvv
+            <input name="cvv" type="number" minlength="3" placeholder="e.g. 123" required>
           </label>
-  
-          <div class="fift">
-              <label class="exp">exp. date (mm/yy)
-      
-                  <div class="input-exp">
-                      <input name="MM" type="number" min="01" max="12" placeholder="MM" required>
-                      <input name="YY" type="number" min="2022" step="1" placeholder="YY" required>
-                  </div>
-      
-              </label>
-      
-              <label class="cvv">cvv
-                  <input name="cvv" type="number" minlength="3" placeholder="e.g. 123" required>
-              </label>
-          </div>
-          <button>Confirm</button>
+        </div>
+        <button>Confirm</button>
       </form>
 
       <!-- <form id="form" name="formulario">
