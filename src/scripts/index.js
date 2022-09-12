@@ -3,38 +3,38 @@ import '../styles/styles.scss';
 "strict mode"
 
 const index = (() => {
-
     const state = {
-        list: []
-    }
+        card: {
+            nome: '',
+            numero: '',
+            mes: '',
+            ano: '',
+            cvv: ''
+        }
+    };
 
     function saveLocalStorage() {
-        const cardStr = JSON.stringify(state.list);
+        const cardStr = JSON.stringify(state.card);
 
-        localStorage.setItem('@saveCard:list', cardStr);
+        localStorage.setItem('@saveCard:card', cardStr);
     }
 
     function loadLocalStorage() {
-        const cardStr = localStorage.getItem('@saveCard:list');
-        const loadedCard = cardStr ? JSON.parse(cardStr) : [];
-        state.list = loadedCard;
-
-        renderCard();
+        const cardStr = localStorage.getItem('@saveCard:card');
+        const loadedCard = cardStr ? JSON.parse(cardStr) : { nome: '', numero: '', mes: '', ano: '', cvv: '' };
+        state.card = loadedCard;
     }
 
     function updateCard(card) {
-        const { id } = card.dataset;
         const inputs = card.querySelectorAll('input');
-        const cardUpdate = state.list.find(atual => atual.id === id);
 
-        cardUpdate.nome = inputs[0].value;
-        cardUpdate.numero = inputs[1].value;
-        cardUpdate.mes = inputs[2].value;
-        cardUpdate.ano = inputs[3].value;
-        cardUpdate.cvv = inputs[4].value;
+        state.card.nome = inputs[0].value;
+        state.card.numero = inputs[1].value;
+        state.card.mes = inputs[2].value;
+        state.card.ano = inputs[3].value;
+        state.card.cvv = inputs[4].value;
 
         renderCard();
-        console.log(state.list);
     }
 
     function validateCard(card) {
@@ -89,86 +89,58 @@ const index = (() => {
 
     function renderCard() {
         saveLocalStorage();
-        const { list } = state;
-        const container = document.querySelector('#form');
+        const form = document.querySelector('#form');
         const confirmed = document.querySelector('.confirmed');
-        // container.innerHTML = '';
+        const inputs = form.querySelectorAll('input');
         
-        if (list.length) {
-            container.style.display = "none";
-            confirmed.style.display = "flex";
-            
-            setTimeout(() => {
-                container.style.display = "flex";
-                confirmed.style.display = "none";
-            }, 2000);
-            list.forEach(({nome, numero, mes, ano, cvv}) => {
-                const inputs = container.querySelectorAll('input');
-                inputs[0].value = nome;
-                inputs[1].value = numero;
-                inputs[2].value = mes;
-                inputs[3].value = ano;
-                inputs[4].value = cvv;
-            })
-        }
-    }
-
-    function saveCard(card) {
-        const inputs = document.forms.formulario.querySelectorAll('input');
-        const {id} = card.dataset;
+        form.style.display = "none";
+        confirmed.style.display = "flex";
         
-        const nome = inputs[0].value;
-        const numero = inputs[1].value;
-        const mes = inputs[2].value;
-        const ano = inputs[3].value;
-        const cvv = inputs[4].value;
+        inputs[0].value = state.card.nome;
+        inputs[1].value = state.card.numero;
+        inputs[2].value = state.card.mes;
+        inputs[3].value = state.card.ano;
+        inputs[4].value = state.card.cvv;
         
-        const cardSave = {
-            id: id,
-            nome: nome,
-            numero: numero,
-            mes: mes,
-            ano: ano,
-            cvv: cvv
-        }
-        console.log('save',state.list);
-        state.list.push(cardSave);
-        renderCard()
+        setTimeout(() => {
+            form.style.display = "flex";
+            confirmed.style.display = "none";
+        }, 2000);
     }
 
     function events() {
+
+        document.forms.formulario.addEventListener('keydown', event => {
+            const input = event.target;
+            
+            if (event.key === 'Backspace' && input.value.length === 0) {
+                event.preventDefault();
+                const { cardHolder, cardNumber, MM, YY } = document.forms.formulario;
+
+                if (input.name === 'cvv') YY.focus();
+                else if (input.name === 'YY') MM.focus();
+                else if (input.name === 'MM') cardNumber.focus();
+                else if (input.name === 'cardNumber') cardHolder.focus();
+            }
+        });
+
         document.forms.formulario.addEventListener('input', () => {
             const { cardHolder, cardNumber, MM, YY, cvv } = document.forms.formulario;
 
+            cardNumber.value = cardNumber.value.slice(0, 16);
+            MM.value = MM.value.slice(0, 2);
+            YY.value = YY.value.slice(0, 4);
+            cvv.value = cvv.value.slice(0, 3);
+
+            if (cardNumber.value.length >= 16) MM.focus();
+            if (MM.value.length >= 2) YY.focus();
+            if (YY.value.length >= 4) cvv.focus();
+
             document.querySelector(".nameCartao").innerHTML =  cardHolder.value;
             document.querySelector(".numCartao").innerHTML =  cardNumber.value;
-            document.querySelector(".expMes").innerHTML =  MM.value;
             document.querySelector(".expAno").innerHTML =  YY.value;
             document.querySelector(".cvvCartao").innerHTML =  cvv.value;
-
-            if (cardHolder.value.length > 40) {
-                cardHolder.value = cardHolder.value.slice(0,30);
-            }
-            if (MM.value > 12) {
-                MM.value = MM.value.length-1;
-
-            }
-            if (MM.value.length === 2) {
-                YY.focus();
-            }
-            if (cardNumber.value.length > 16) {
-                cardNumber.value = cardNumber.value.slice(0,16);
-
-                if (cardNumber.value.length === 16) {
-                    MM.focus();
-                }
-            }
-            if (YY.value.length === 4) {
-                cvv.focus();
-            }
-            if (cvv.value.length > 3) {
-                cvv.value = cvv.value.slice(0,2);
-            }
+            document.querySelector(".expMes").innerHTML =  MM.value;
         });
 
         document.querySelector('#form').addEventListener('click', (event) => {
@@ -191,16 +163,8 @@ const index = (() => {
             const card =  click.closest('#form');
             
             if (validateCard(card)) {
-
-                if (state.list.length){
-                    updateCard(card);
-                    console.log(state.list);
-                }
-                else {
-                    saveCard(card);
-                }
+                updateCard(card);
             }
-
         });
     }
 
