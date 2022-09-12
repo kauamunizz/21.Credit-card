@@ -8,19 +8,6 @@ const index = (() => {
         list: []
     }
 
-    // function createCard(card) {
-    //     const newCard = card || {
-    //         id: Date.now(),
-    //         nome: '',
-    //         numero: '',
-    //         mes: '',
-    //         ano: '',
-    //         cvv: ''
-    //     }
-       
-    //     console.log(state.list)
-    // }
-
     function saveLocalStorage() {
         const cardStr = JSON.stringify(state.list);
 
@@ -61,25 +48,40 @@ const index = (() => {
         const ano = inputs[3].value;
         const cvv = inputs[4].value;
 
-        if (nome === '' || nome == Number) {
+        if (nome === '' || nome === Number || nome.length < 4) {
             error = false;
-            alert('O campo deverá ser preenchido com Nome Completo.');
+            // alert('O campo deverá ser preenchido com Nome Completo.');
+            inputs[0].closest('label').insertAdjacentHTML('beforeend', `
+                <div class='error'>ERRO: O campo deverá ser preenchido com Nome Completo.</div>            
+            `);
         }
         else if (numero === String || numero.length < 16 || numero.length > 17) {
             error = false;
-            alert('O campo CARD NUMBER deve ser preenchido com 16 numeros.');
+            // alert('O campo CARD NUMBER deve ser preenchido com 16 numeros.');
+            inputs[1].closest('label').insertAdjacentHTML('beforeend', `
+                <div class='error'>ERRO: O campo CARD NUMBER deve ser preenchido com 16 numeros.</div>            
+            `);
         }
         else if (mes <   1 || mes > 12) {
             error = false;
-            alert('O mes deverá ser entre 01 a 12.');
+            // alert('O mes deverá ser entre 01 a 12.');
+            inputs[2].closest('label').insertAdjacentHTML('beforeend', `
+                <div class='error'>ERRO: O mes deverá ser entre 01 a 12.</div>            
+            `);
         }
         else if (ano < 2022 || ano > 2060) {
             error = false;
-            alert('O ano deverá ser entre 2022 a 2060.');
+            // alert('O ano deverá ser entre 2022 a 2060.');
+            inputs[3].closest('label').insertAdjacentHTML('beforeend', `
+                <div class='error'>ERRO: O ano deverá ser entre 2022 a 2060.</div>            
+            `);
         }
         else if (cvv < 0 || cvv > 999) {
             error = false;
-            alert('O Codigo de Seguranca deverá ter 3 digitos.');
+            // alert('O Codigo de Seguranca deverá ter 3 digitos.');
+            inputs[4].closest('label').insertAdjacentHTML('beforeend', `
+                <div class='error'>ERRO: O Codigo de Seguranca deverá ter 3 digitos!</div>            
+            `);
         }
 
         return error;
@@ -90,9 +92,7 @@ const index = (() => {
         const { list } = state;
         const container = document.querySelector('#form');
         const confirmed = document.querySelector('.confirmed');
-        // container.innerHTML = '';     
-        
-
+        // container.innerHTML = '';
         
         if (list.length) {
             container.style.display = "none";
@@ -145,6 +145,27 @@ const index = (() => {
             document.querySelector(".expMes").innerHTML =  MM.value;
             document.querySelector(".expAno").innerHTML =  YY.value;
             document.querySelector(".cvvCartao").innerHTML =  cvv.value;
+
+            if (MM.value > 12) {
+                MM.value = MM.value.length-1;
+
+            }
+            if (MM.value.length === 2) {
+                YY.focus();
+            }
+            else if (cardNumber.value.length > 16) {
+                cardNumber.value = cardNumber.value.slice(0,16);
+
+                if (cardNumber.value.length === 16) {
+                    MM.focus();
+                }
+            }
+            else if (YY.value.length === 4) {
+                cvv.focus();
+            }
+            else if (cvv.value.length > 3) {
+                cvv.value = cvv.value.slice(0,2);
+            }
         });
 
         document.querySelector('#form').addEventListener('click', (event) => {
