@@ -146,6 +146,9 @@ const index = (() => {
             document.querySelector(".expAno").innerHTML =  YY.value;
             document.querySelector(".cvvCartao").innerHTML =  cvv.value;
 
+            if (cardHolder.value.length > 40) {
+                cardHolder.value = cardHolder.value.slice(0,30);
+            }
             if (MM.value > 12) {
                 MM.value = MM.value.length-1;
 
@@ -153,17 +156,17 @@ const index = (() => {
             if (MM.value.length === 2) {
                 YY.focus();
             }
-            else if (cardNumber.value.length > 16) {
+            if (cardNumber.value.length > 16) {
                 cardNumber.value = cardNumber.value.slice(0,16);
 
                 if (cardNumber.value.length === 16) {
                     MM.focus();
                 }
             }
-            else if (YY.value.length === 4) {
+            if (YY.value.length === 4) {
                 cvv.focus();
             }
-            else if (cvv.value.length > 3) {
+            if (cvv.value.length > 3) {
                 cvv.value = cvv.value.slice(0,2);
             }
         });
