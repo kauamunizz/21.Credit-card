@@ -50,35 +50,30 @@ const index = (() => {
 
         if (nome === '' || nome === Number || nome.length < 4) {
             error = false;
-            // alert('O campo deverá ser preenchido com Nome Completo.');
             inputs[0].closest('label').insertAdjacentHTML('beforeend', `
                 <div class='error'>ERRO: O campo deverá ser preenchido com Nome Completo.</div>            
             `);
         }
         else if (numero === String || numero.length < 16 || numero.length > 17) {
             error = false;
-            // alert('O campo CARD NUMBER deve ser preenchido com 16 numeros.');
             inputs[1].closest('label').insertAdjacentHTML('beforeend', `
                 <div class='error'>ERRO: O campo CARD NUMBER deve ser preenchido com 16 numeros.</div>            
             `);
         }
         else if (mes <   1 || mes > 12) {
             error = false;
-            // alert('O mes deverá ser entre 01 a 12.');
             inputs[2].closest('label').insertAdjacentHTML('beforeend', `
                 <div class='error'>ERRO: O mes deverá ser entre 01 a 12.</div>            
             `);
         }
         else if (ano < 2022 || ano > 2060) {
             error = false;
-            // alert('O ano deverá ser entre 2022 a 2060.');
             inputs[3].closest('label').insertAdjacentHTML('beforeend', `
                 <div class='error'>ERRO: O ano deverá ser entre 2022 a 2060.</div>            
             `);
         }
         else if (cvv < 0 || cvv > 999) {
             error = false;
-            // alert('O Codigo de Seguranca deverá ter 3 digitos.');
             inputs[4].closest('label').insertAdjacentHTML('beforeend', `
                 <div class='error'>ERRO: O Codigo de Seguranca deverá ter 3 digitos!</div>            
             `);
